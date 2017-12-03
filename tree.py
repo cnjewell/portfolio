@@ -4,15 +4,14 @@
 
 # value, left right
 
-
 # TODO: TreeNode class
 # TODO: Class methods: render, insert, has_value, remove
 # TODO: Invert Binary tree, render inversion, save directional switch for subsequent insertions
 
-
 class TreeNode:
-    def __init__(self, val):
+    def __init__(self, val, parent=None):
         self.val = val
+        self.parent = parent
         self.left = None
         self.right = None
 
@@ -38,16 +37,16 @@ class TreeNode:
             if self.right is not None:
                 self.right.insert(val)
             else:
-                self.right = TreeNode(val)
+                self.right = TreeNode(val, self)
 
         elif val < self.val:
             if self.left is not None:
                 self.left.insert(val)
             else:
-                self.left = TreeNode(val)
+                self.left = TreeNode(val, self)
 
     def has_value(self, val):
-        """ Returns True if val in is tree """
+        """ Returns True if val in is tree, False if not """
 
         if self.val == val:
             return True
@@ -61,54 +60,71 @@ class TreeNode:
             
             if self.right is not None:
                 return self.right.has_value(val)
+
+
+    def lowest_child(self):
+        """Returns child node with lowest value. Returns self if there are no children"""
+
+        if self.left == None:
+            return self
+        else:
+            return self.left.lowest_child()
+
+
+    def remove(self, val, parent=None):
+        """ Remove val from TreeNode root. Returns None if val is not in tree or if root is val and is the only node. """
+        
+        # target found
+        if self.val == val:
             
+            # if target is has no parent and has no children
+            if self.left == None and self.right == None and parent == None:
+                return None
 
+            # Target has no children, simply set link to parent with None
+            elif self.left == None and self.right == None:
+                if parent.left == self:
+                    parent.left = None
+                else:
+                    parent.right = None
 
-# def has_value(root, val):
-#     """ Returns True if val in is tree """
-    
-#     if root.val == val:
-#         return True
+            # Target has one child
+            # Replace target's parent's reference with only child
+            elif self.left == None or self.right == None:
+                if parent.left == self:
+                    if self.left != None:
+                        parent.left = self.left
+                    else:
+                        parent.left = self.right
+                else:
+                    if self.left != None:
+                        parent.right = self.left
+                    else:
+                        parent.right = self.right
 
-#     elif root.left == None and root.right == None:
-#         return False
+            # Target has two children
+            # Find lowest_child() of right-hand branch
+            # The move min value to target val and None the lowest child
+            else: 
+                replacement_node = self.right.lowest_child()
+                self.val = replacement_node.val
+                replacement_node.remove(replacement_node.val, replacement_node.parent)
 
-#     else:
-#         if root.left  is not None:
-#             return has_value(root.left,  val)
-
-#         if root.right is not None:
-#             return has_value(root.right, val)
-    
-
-def remove(root, val):
-    """ Remove val from TreeNode root. Return None if val is not in tree. """
-    # first, is val even in this tree? If not, return None
-
-    # find the TreeNode in this tree that has the cargo 'val'
-    # once you find that TreeNode, 
-        # Set the upstream node's left/right to None
-        # Take the clipped TreeNode and for each connected node, insert their cargoes into root
-            # Do not include the clipped TreeNode's cargo in that run of insertions
-
-    # base case(s)
-        # Only 1 TreeNode equal to the value, return error?
-            # no last_tree
-        # Only 2 last_tree, this_tree
-
-    # Solution outline
-    # When removing a node, 
-        # find the lowest child of the target node
-        # replace the removed node with the lowest child
-    
-    first_pass = False
-    if first_pass:
-
-        if not has_value(root, val):
+        # can I keep searching?
+        elif self.left == None and self.right == None:
             return None
-    
-        if root.val == val:
-            return None
+        
+        # keep searching for target
+        else:
+            if self.left is not None:
+                self.left.remove(val, self)
+            if self.right is not None:
+                self.right.remove(val, self)
+
+
+
+    def __str__(self):
+        return "{TreeNode: val=" + str(self.val) + "}"
         
 
 def main():
@@ -141,8 +157,20 @@ def main():
     print(root.has_value(2))
     print(root.has_value(10))
 
-    tree2 = TreeNode(3)
-    print(tree2.has_value(5))
+    print(root.lowest_child())
+
+    root.remove(9)
+    print(root.get_list())
+    root.remove(5)
+    print(root.get_list())
+    root.remove(2)
+    print(root.get_list())
+    root.remove(5)
+    print(root.get_list())
+    root.remove(7)
+    print(root.get_list())
+
+
 
     print()
 
