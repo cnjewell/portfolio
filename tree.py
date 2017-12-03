@@ -62,13 +62,13 @@ class TreeNode:
                 return self.right.has_value(val)
 
 
-    def lowest_child(self):
+    def lowest_value(self):
         """Returns child node with lowest value. Returns self if there are no children"""
 
         if self.left == None:
-            return self
+            return self.val
         else:
-            return self.left.lowest_child()
+            return self.left.lowest_value()
 
 
     def remove(self, val, parent=None):
@@ -91,24 +91,27 @@ class TreeNode:
             # Target has one child
             # Replace target's parent's reference with only child
             elif self.left == None or self.right == None:
-                if parent.left == self:
-                    if self.left != None:
-                        parent.left = self.left
-                    else:
-                        parent.left = self.right
+                if parent == None:
+                    self.val = self.right.lowest_value()
+                    self.right.remove(self.val, self)
                 else:
-                    if self.left != None:
-                        parent.right = self.left
+                    if parent.left == self:
+                        if self.left != None:
+                            parent.left = self.left
+                        else:
+                            parent.left = self.right
                     else:
-                        parent.right = self.right
+                        if self.left != None:
+                            parent.right = self.left
+                        else:
+                            parent.right = self.right
 
             # Target has two children
             # Find lowest_child() of right-hand branch
             # The move min value to target val and None the lowest child
             else: 
-                replacement_node = self.right.lowest_child()
-                self.val = replacement_node.val
-                replacement_node.remove(replacement_node.val, replacement_node.parent)
+                self.val = self.right.lowest_value()
+                self.right.remove(self.val, self)
 
         # can I keep searching?
         elif self.left == None and self.right == None:
@@ -157,18 +160,21 @@ def main():
     print(root.has_value(2))
     print(root.has_value(10))
 
-    print(root.lowest_child())
+    print(root.lowest_value())
 
-    root.remove(9)
+    root.remove(1)
     print(root.get_list())
-    root.remove(5)
+    root.remove(1)
     print(root.get_list())
     root.remove(2)
     print(root.get_list())
+    root.remove(3)
+    print(root.get_list())
+    root.remove(4)
+    print(root.get_list())
     root.remove(5)
     print(root.get_list())
-    root.remove(7)
-    print(root.get_list())
+
 
 
 
