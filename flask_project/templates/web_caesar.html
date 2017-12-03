@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="column is-half">
+
+<form action="/web_caesar" method="post">
+
+	<div class="field">
+	<label class="label" for="rotation_field">Rotation Value</label>
+	<input class="input" type="text" name="rot" id="rotation_field" value="{{rot}}"/>
+	</div>
+
+	<div class="field">
+	<label class="label" for="textarea_field">Plaintext</label>
+	<textarea class="textarea" name="text" cols="50" rows="6">{{text}}</textarea>
+	</div>
+
+	<div class="control">
+	<input class="button is-primary" type="submit" value="Encrypt!"/>
+	</div>
+</form>
+</div>
+</div>
+
+{% endblock %}

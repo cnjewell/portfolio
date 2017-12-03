@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+
+<div class="column is-three-quarters">
+<h3 class="title">Hey there TF!</h3>
+	
+	<div class="content">
+	<p>This here is my flask project for Unit 2. I've been working ahead of where the class is at the moment, so I've done things a bit differently than the Unit 2 assignments asked. Instead of doing individual assignments (<strong>Web Caesar</strong>, <strong>User Signup</strong>, <strong>Build-a-Blog</strong>, and <strong>Blogz</strong>) I've combined them all into one flask app. You'll find functionality meeting, and sometimes exceeding, the requirements laid out in the assignments.</p>
+	<p> Please note, however, that I have deviated from the suggested methods of completion in some areas. One notable exception is the use of <strong>url query strings</strong> (i.e. "?post_id=2"). I have not implemented them in my project. I hope you'll forgive me! While I do understand their importance in applications like Google's searches, I felt as if I may use this opportunity to implement a cleaner, more beautiful url configuration. You'll find that the urls are organized the following manner:</p> 
+
+	<ul>
+	<li><a href="/blog"><em>/blog</em></a> and <a href="/blog/cjewell"><em>/blog/username</em></a> direct the user to a list of all blog authors on the site, as requested by the assignment, and to a list of all posts by a particular author.</li>
+	<li><em><a href="/blog/posts">/blog/posts</a></em> and <em><a href="/blog/posts/6">/blog/posts/#</a></em> direct the user to a list of all posts and to individual posts by their primary key number.</li>
+	<li>Both author and post url routers handle missing posts and authors with redierects and flash messages.</li>
+	<li>Both author and post url routers are designed not to pass in data that may be a SQL injection. </li>
+	</ul>
+
+	<p>I also took the opportunity to implement <strong>database migrations</strong>. Before the class started I worked briefly with Django, which implements them by default. It seemed strange that Unit 2 didn't cover what seemed like such an important subject, so I took this as an opportunity to teach myself! I installed Flask-Migrate and added the username field to my User model without <strong>DROP</strong>'ping my entire database. That ended up being a tremendously satisfying experience, getting all that to play nice with what I had already written.</p>
+	<p>I hope you'll forgive the deviations from the assignment.</p>
+	</div>
+</div>
+
+</div>
+
+
+{% endblock %}

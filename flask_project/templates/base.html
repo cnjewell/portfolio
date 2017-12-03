@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Unit 02 - All Assignments</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
+    </head>
+
+	<body>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Unit 2 - Blog App Assignments</h1>
+      <p class="subtitle">
+        A congolmeration of Unit 2 assignments.
+      </p>
+    </div>
+
+    <div class="container">
+      <nav class="level">
+        <div class="level-left">
+          <p class="level-item"><a href="/">Home</a></p>
+          <p class="level-item"><a href="/web_caesar">Caesar</a></p>
+          <p class="level-item"><a href="/blog">Authors</a></p>
+          <p class="level-item"><a href="/blog/posts">All Posts</a></p>
+          {% if 'user' in session %}
+          <p class="level-item"><a href="/blog/newpost">New Post</a></p>
+          {% endif %}
+        </div>
+        <div class="level-right">
+          {% if 'user' in session %}
+          {{ session['user'] }}
+          <p class="level-item">
+          <div class="control">
+            <form action="/logout" method="post" id='logout'>
+              <input class="button is-outlined" type="submit" value="Log Out" />
+            </form>
+          </div>
+          
+          </p>
+          {% else %}
+          <p class="level-item"><a href="/login">Login</a></p>
+          <p class="level-item"><a href="/register">Register</a></p>
+          {% endif %}
+        </div>
+      </nav>
+      <hr>
+    </div>
+    
+    <!-- Flash Messages with Bulma.io Notification css -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+        <div class="column is-half is-offset-one-quarter">
+          <div class="notification {{ category }}">
+            <button class="delete"></button>
+            {{message}}
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+  </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <strong>Launchcode Unit 2 Assignments</strong> by Christopher Jewell
+          </p>
+          <p>
+            <a class="icon" href="https://github.com/cnjewell/Launchcode/tree/master/Unit_02/assignment">
+            <i class="fa fa-2x fa-github"></i>
+            </a>
+          </p>
+    </footer>
+	</body>
+
+</html>

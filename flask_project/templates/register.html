@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="column is-one-third is-offset-one-third">
+<h2 class="title">Register New Account</h2>
+
+
+<form action="/register" method="post">
+
+  	<div class="field">
+    <label class="label" for="email_field">Email </label>
+  	<input class="input" type="text" id="email_field" name="email" value="{{email}}"/>
+    </div>
+
+    <div class="field">
+    <label class="label" for="username_field">Username </label>
+    <input class="input" type="text" id="username_field" name="username" value="{{username}}"/>
+    </div>
+
+    <div class="field">
+  	<label class="label" for="password_field">New Password </label>
+  	<input class="input" type="password" id="password_field" name="password"/>
+    </div>
+
+    <div class="field">  
+  	<label class="label" for="verification_field">Verify Password </label>
+  	<input class="input" type="password" id="verification_field" name="verify"/>
+    </div>
+
+    <div class="control">
+  	<input class="button is-primary" type="submit" value="Register"/>
+    </div>
+    
+</form>
+
+
+<div class="content">
+  <br>
+  <p>Already a user? <a href="/login">Login here</a></p>
+</div>
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="column is-half">
+	<h2 class="title">Author New Blog Post</h2>
+	<form action="/blog/newpost" method="post">
+		<div class="field">
+			<label class="label" for="title_field">Title:</label>
+			<input class="input" type="text" name="title" id="title_field" value="{{title}}">
+		</div>
+		
+		<div class="field">
+			<label class="label" for="post_body_field">Blog Post Body:</label>
+			<textarea class="textarea" name="body" id="post_body_field">{{body}}</textarea>
+		</div>
+
+		<div class="control">
+			<input class="button" type="submit" value="Publish">
+		</div>
+	</form>
+</div>
+
+
+{% endblock %}

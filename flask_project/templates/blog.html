@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <div class="content">
+  
+  <h2>Blog Posts</h2>
+  <!-- {{ postlist }}  -->
+  
+  {% if postlist %}
+    {% for post in postlist %}
+      <article>
+        <h3><a href='/blog/posts/{{ post[0].id }}'>{{ post[0].title }}</a></h3>
+        <p>{{ post[0].body }}</p>
+        <p>~Written by <a href='/blog/{{ post[1].username }}'>{{ post[1].username }}</a></p>
+      </article>
+      <hr/>
+    {% endfor %}
+  {% endif %}
+  
+  </div>
+{% endblock %}
