@@ -6,7 +6,7 @@
 
 
 # TODO: TreeNode class
-# TODO: Class methods: list_all, render, insert, contains, remove
+# TODO: Class methods: render, insert, has_value, remove
 # TODO: Invert Binary tree, render inversion, save directional switch for subsequent insertions
 
 
@@ -16,56 +16,69 @@ class TreeNode:
         self.left = None
         self.right = None
 
-def get_list(root):
-    """ Returns list of tree values """
-    
-    if root.left is not None:
-        left = get_list(root.left)
-    else:
-        left = []
+    def get_list(self):
+        """ Returns list of tree values """
+        return_left = []
+        return_right = []
 
-    if root.right is not None:
-        right = get_list(root.right)
-    else:
-        right = []
+        if self.left is not None:
+            return_left = self.left.get_list()
 
-    return left + [root.val] + right
+        if self.right is not None:
+            return_right = self.right.get_list()
 
+        return return_left + [self.val] + return_right
 
-def insert(root, val):
-    """ Insert val in root """ 
-    
-    if val > root.val:
-        if root.right is not None:
-            insert(root.right, val)
+    def insert(self, val):
+        """ Insert val in root """ 
+        if val == self.val:
+            return None
+
+        elif val > self.val:
+            if self.right is not None:
+                self.right.insert(val)
+            else:
+                self.right = TreeNode(val)
+
+        elif val < self.val:
+            if self.left is not None:
+                self.left.insert(val)
+            else:
+                self.left = TreeNode(val)
+
+    def has_value(self, val):
+        """ Returns True if val in is tree """
+
+        if self.val == val:
+            return True
+
+        elif self.left == None and self.right == None:
+            return False
+
         else:
-            root.right = TreeNode(val)
+            if self.left is not None:
+                return self.left.has_value(val)
+            
+            if self.right is not None:
+                return self.right.has_value(val)
+            
+
+
+# def has_value(root, val):
+#     """ Returns True if val in is tree """
     
-    elif val < root.val:
-        if root.left is not None:
-            insert(root.left, val)
-        else:
-            root.left = TreeNode(val)
-    
-    elif val == root.val:
-        return None
+#     if root.val == val:
+#         return True
 
+#     elif root.left == None and root.right == None:
+#         return False
 
-def tree_search(root, val):
-    """ Returns True if val in is tree """
-    
-    if root.val == val:
-        return True
+#     else:
+#         if root.left  is not None:
+#             return has_value(root.left,  val)
 
-    elif root.left == None and root.right == None:
-        return False
-
-    else:
-        if root.left  is not None:
-            return tree_search(root.left,  val)
-
-        if root.right is not None:
-            return tree_search(root.right, val)
+#         if root.right is not None:
+#             return has_value(root.right, val)
     
 
 def remove(root, val):
@@ -91,7 +104,7 @@ def remove(root, val):
     first_pass = False
     if first_pass:
 
-        if not tree_search(root, val):
+        if not has_value(root, val):
             return None
     
         if root.val == val:
@@ -106,32 +119,34 @@ def main():
     root.left = TreeNode(3)
     root.right = TreeNode(7)
 
-    print(get_list(root))
+    print(root.get_list())
 
-    insert(root, 9)
-    print(get_list(root))
-    insert(root, 1)
-    print(get_list(root))
-    insert(root, 6)
-    print(get_list(root))
-    insert(root, 8)
-    print(get_list(root))
-    insert(root, 2)
-    print(get_list(root))
-    insert(root, 4)
-    print(get_list(root))
+    root.insert(9)
+    print(root.get_list())
+    root.insert(1)
+    print(root.get_list())
+    root.insert(6)
+    print(root.get_list())
+    root.insert(8)
+    print(root.get_list())
+    root.insert(2)
+    print(root.get_list())
+    root.insert(4)
+    print(root.get_list())
+    root.insert(5)
+    print(root.get_list())
 
     print()
-    print(tree_search(root, 5))
-    print(tree_search(root, 2))
-    print(tree_search(root, 10))
+    print(root.has_value(5))
+    print(root.has_value(2))
+    print(root.has_value(10))
 
     tree2 = TreeNode(3)
-    print(tree_search(tree2, 5))
+    print(tree2.has_value(5))
 
     print()
 
-    print(get_list(root))
+    print(root.get_list())
 
 if __name__ == "__main__":
     main()
